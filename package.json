@@ -2,7 +2,8 @@
     "name": "goal-api",
     "version": "1.0.0",
     "description": "",
-    "main": "app.js",
+    "main": "build/app.js",
+    "type": "module",
     "scripts": {
         "build": "tsc",
         "start": "node src/app.js",
@@ -17,18 +18,21 @@
         "@types/express": "^4.17.13",
         "@types/jsonwebtoken": "^9.0.0",
         "@types/morgan": "^1.9.3",
-        "@types/node": "^17.0.21",
+        "@types/node": "^17.0.45",
         "concurrently": "^7.0.0",
         "nodemon": "^2.0.15",
-        "typescript": "^4.5.5"
+        "typescript": "^4.9.5"
     },
     "dependencies": {
+        "@planetscale/database": "^1.7.0",
         "bcrypt": "^5.1.0",
         "cors": "^2.8.5",
+        "dotenv": "^16.0.3",
         "express": "^4.17.3",
         "jsonwebtoken": "^9.0.0",
         "morgan": "^1.10.0",
         "mysql2": "^2.3.3",
-        "sequelize": "^6.17.0"
+        "sequelize": "^6.17.0",
+        "ts-node": "^10.9.1"
     }
 }

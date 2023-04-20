@@ -7,24 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import express from 'express';
-import morgan from 'morgan';
-import { conn } from './db.js';
-import cors from 'cors';
-const app = express();
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-const corsOptions = {
-    origin: ['http://localhost:3001']
-};
-app.use(cors(corsOptions));
-// routes will go here
-app.listen(3000);
-function showTables() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const results = yield conn.execute('SHOW TABLES');
-        console.log(results);
-    });
-}
-showTables();
+export const CreateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+});
+export const LoginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+});
