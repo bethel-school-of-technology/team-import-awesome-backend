@@ -1,5 +1,7 @@
 import express from 'express'
 import morgan from 'morgan';
+import { conn } from './db.js';
+
 
 const app = express();
 
@@ -17,3 +19,9 @@ app.use(cors(corsOptions));
 // routes will go here
 
 app.listen(3000);
+
+async function showTables() {
+    const results = await conn.execute('SHOW TABLES')
+    console.log(results)
+}
+showTables()

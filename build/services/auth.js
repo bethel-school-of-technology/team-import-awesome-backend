@@ -12,24 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const morgan_1 = __importDefault(require("morgan"));
-const db_js_1 = require("./db.js");
-const app = (0, express_1.default)();
-app.use((0, morgan_1.default)('dev'));
-app.use(express_1.default.json());
-app.use(express_1.default.urlencoded({ extended: true }));
-const cors = require('cors');
-const corsOptions = {
-    origin: ['http://localhost:3001']
-};
-app.use(cors(corsOptions));
-// routes will go here
-app.listen(3000);
-function showTables() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const results = yield db_js_1.conn.execute('SHOW TABLES');
-        console.log(results);
-    });
-}
-showTables();
+exports.comparePasswords = exports.hashPassword = void 0;
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const hashPassword = (plainTextPassword) => __awaiter(void 0, void 0, void 0, function* () {
+    const saltRound = 12;
+    const hash = yield bcrypt_1.default.hash(plainTextPassword, saltRound);
+    return hash;
+});
+exports.hashPassword = hashPassword;
+const comparePasswords = (plainTextPassword, hashPassword) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield bcrypt_1.default.compare(plainTextPassword, hashPassword);
+});
+exports.comparePasswords = comparePasswords;

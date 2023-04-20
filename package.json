@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "",
     "main": "app.js",
+    "type": "module",
     "scripts": {
         "build": "tsc",
         "start": "node src/app.js",
@@ -23,8 +24,10 @@
         "typescript": "^4.5.5"
     },
     "dependencies": {
+        "@planetscale/database": "^1.7.0",
         "bcrypt": "^5.1.0",
         "cors": "^2.8.5",
+        "dotenv": "^16.0.3",
         "express": "^4.17.3",
         "jsonwebtoken": "^9.0.0",
         "morgan": "^1.10.0",
