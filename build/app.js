@@ -19,7 +19,9 @@ const corsOptions = {
     origin: ['http://localhost:3001']
 };
 app.use(cors(corsOptions));
-// routes will go here
+app.get('/', (req, res) => {
+    res.json({ msg: 'Hello world!' });
+});
 app.listen(3000);
 function showTables() {
     return __awaiter(this, void 0, void 0, function* () {

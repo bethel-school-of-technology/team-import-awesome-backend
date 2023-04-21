@@ -8,6 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { User } from '../models/user';
+const secret = 'This is the way';
 export const hashPassword = (plainTextPassword) => __awaiter(void 0, void 0, void 0, function* () {
     const saltRound = 12;
     const hash = yield bcrypt.hash(plainTextPassword, saltRound);
@@ -15,4 +18,28 @@ export const hashPassword = (plainTextPassword) => __awaiter(void 0, void 0, voi
 });
 export const comparePasswords = (plainTextPassword, hashPassword) => __awaiter(void 0, void 0, void 0, function* () {
     return yield bcrypt.compare(plainTextPassword, hashPassword);
+});
+export const signUserToken = (user) => __awaiter(void 0, void 0, void 0, function* () {
+    let token = jwt.sign({ username: user.username }, secret, { expiresIn: '1hr' });
+    return token;
+});
+export const verifyUser = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    // Get the Authorization header from the request
+    const authHeader = req.headers.authorization;
+    // If header exists, parse token from `Bearer <token>`
+    if (authHeader) {
+        const token = authHeader.split(' ')[1];
+        // Verify the token and get the user
+        try {
+            let decoded = yield jwt.verify(token, secret);
+            //change here
+            return User.findByPk(decoded.username);
+        }
+        catch (err) {
+            return null;
+        }
+    }
+    else {
+        return null;
+    }
 });

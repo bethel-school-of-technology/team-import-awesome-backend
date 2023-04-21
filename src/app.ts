@@ -15,7 +15,10 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// routes will go here
+
+app.get('/', (req, res) => {
+    res.json({msg: 'Hello world!'})
+})
 
 app.listen(3000);
 
@@ -24,3 +27,4 @@ async function showTables() {
     console.log(results)
 }
 showTables()
+
