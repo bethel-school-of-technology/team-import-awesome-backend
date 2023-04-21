@@ -1,34 +1,52 @@
+import { Task } from '../models/Task';
 import { RequestHandler } from "express";
-import { conn } from "../db";
 
 
-export const getGoal: RequestHandler = async (req, res, next) => {
-    const { goal_id } = req.body;
-    await conn.execute("SELECT title, plan, is_completed, timeframe FROM goals WHERE goal_id=?", [goal_id]);
+export const getTasks: RequestHandler = async (req, res, next) => {
+    let tasks = await Task.findAll();
+    res.status(200).json(tasks);
 }
 
-export const createGoal: RequestHandler = async (req, res, next) => {
-    const { title, plan, is_completed, timeframe } = req.body;
-    await conn.execute("INSERT INTO goals (title, plan, is_compleated, timeframe) VALUES (?, ?, ?, ?)", [title, plan, is_completed, timeframe]);
-}
-
-export const updateGoal: RequestHandler = async (req, res, next) => {
-    let goalId = req.params.goal_id;
-    const { title, plan, is_completed, timeframe } = req.body;
-
-        await conn.execute("UPDATE goals (title, plan, is_compleated, timeframe) VALUES (?, ?, ?, ?)", [title, plan, is_completed, timeframe]);
-        
-        res.status(200).json();
-}
-
-export const deleteGoal: RequestHandler = async (req, res, next) => {
-        let goalFound =  await conn.execute("SELECT goal_id FROM goals");
-        
-        if (goalFound) {
-            await conn.execute("DELETE FROM goals WHERE goal_id = goalFound")
-            
-            res.status(200).json();
-        } else {
-            res.status(404).json();
-        }
+export const createTask: RequestHandler = async (req, res, next) => {
+    let newTask: Task = req.body;
+    if (newTask.title) {
+        let created = await Task.create({title: newTask.title, completed: false});
+        res.status(201).json(created);
     }
+    else {
+        res.status(400).send();
+    }
+}
+
+export const updateTask: RequestHandler = async (req, res, next) => {
+  let taskId = req.params.id;
+  let newTask: Task = req.body;
+  
+  let taskFound = await Task.findByPk(taskId);
+  
+  if (taskFound && taskFound.id == newTask.id
+      && newTask.title) {
+          await Task.update(newTask, {
+              where: { id: taskId }
+          });
+          res.status(200).json();
+  }
+  else {
+      res.status(400).json();
+  }
+}
+
+export const deleteTask: RequestHandler = async (req, res, next) => {
+  let taskId = req.params.id;
+  let taskFound = await Task.findByPk(taskId);
+  
+  if (taskFound) {
+      await Task.destroy({
+              where: { id: taskId }
+      });
+      res.status(200).json();
+  }
+  else {
+      res.status(404).json();
+  }
+}
