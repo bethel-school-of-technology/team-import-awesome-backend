@@ -24,7 +24,6 @@ export function GoalFactory(sequelize: Sequelize) {
         username: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true
         },
         title: {
             type: DataTypes.STRING,
