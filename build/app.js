@@ -10,13 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import express from 'express';
 import morgan from 'morgan';
 import { conn } from './db.js';
+import cors from "cors";
 import goalRoutes from './routes/goalRoutes';
 import userRoutes from './routes/userRoutes';
 const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const cors = require('cors');
 const corsOptions = {
     origin: ['http://localhost:3001']
 };
@@ -24,6 +24,9 @@ app.use(cors(corsOptions));
 // routes
 app.use('/goals', goalRoutes);
 app.use('/users', userRoutes);
+app.get('/', (req, res) => {
+    res.json({ msg: 'Hello world!' });
+});
 app.listen(3000);
 function showTables() {
     return __awaiter(this, void 0, void 0, function* () {

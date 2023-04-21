@@ -1,6 +1,6 @@
-import express from 'express'
+import express, {Request, Response, NextFunction } from 'express'
 import morgan from 'morgan';
-import { conn } from './db.js';
+import { db } from './models'
 import goalRoutes from './routes/goalRoutes'
 import userRoutes from './routes/userRoutes'
 
@@ -21,10 +21,13 @@ app.use(cors(corsOptions));
 app.use('/goals', goalRoutes);
 app.use('/users', userRoutes);
 
-app.listen(3000);
+app.use((req: Request, res: Response, next: NextFunction) => {
+    res.status(404).end();
+});
 
-async function showTables() {
-    const results = await conn.execute('SHOW TABLES')
-    console.log(results)
-}
-showTables()
+// Syncing our database
+db.sync().then(() => {
+    console.info("----- DATABASE CONNECTION: SUCCESSFUL -----")
+});
+
+app.listen(3000);
