@@ -1,19 +1,7 @@
-import { InferAttributes, InferCreationAttributes, Model, DataTypes, Sequelize } from "sequelize";
-
-export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>>{
-    declare userId: number;
-    declare username: string;
-    declare password: string;
-    declare firstName: string;
-    declare lastName: string;
-    declare age: number;
-    declare email: string;
-    declare bio: string;
-    declare createdAt?: Date;
-    declare updatedAt?: Date;
+import { Model, DataTypes } from "sequelize";
+export class User extends Model {
 }
-
-export function UserFactory(sequelize: Sequelize) {
+export function UserFactory(sequelize) {
     User.init({
         userId: {
             type: DataTypes.INTEGER,

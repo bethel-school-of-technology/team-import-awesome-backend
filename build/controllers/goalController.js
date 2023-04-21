@@ -7,25 +7,43 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { conn } from "../db";
-export const getGoal = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { goal_id } = req.body;
-    yield conn.execute("SELECT title, plan, is_completed, timeframe FROM goals WHERE goal_id=?", [goal_id]);
+import { Task } from '../models/Task';
+export const getTasks = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let tasks = yield Task.findAll();
+    res.status(200).json(tasks);
 });
-export const createGoal = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { title, plan, is_completed, timeframe } = req.body;
-    yield conn.execute("INSERT INTO goals (title, plan, is_compleated, timeframe) VALUES (?, ?, ?, ?)", [title, plan, is_completed, timeframe]);
+export const createTask = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let newTask = req.body;
+    if (newTask.title) {
+        let created = yield Task.create({ title: newTask.title, completed: false });
+        res.status(201).json(created);
+    }
+    else {
+        res.status(400).send();
+    }
 });
-export const updateGoal = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let goalId = req.params.goal_id;
-    const { title, plan, is_completed, timeframe } = req.body;
-    yield conn.execute("UPDATE goals (title, plan, is_compleated, timeframe) VALUES (?, ?, ?, ?)", [title, plan, is_completed, timeframe]);
-    res.status(200).json();
+export const updateTask = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let taskId = req.params.id;
+    let newTask = req.body;
+    let taskFound = yield Task.findByPk(taskId);
+    if (taskFound && taskFound.id == newTask.id
+        && newTask.title) {
+        yield Task.update(newTask, {
+            where: { id: taskId }
+        });
+        res.status(200).json();
+    }
+    else {
+        res.status(400).json();
+    }
 });
-export const deleteGoal = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let goalFound = yield conn.execute("SELECT goal_id FROM goals");
-    if (goalFound) {
-        yield conn.execute("DELETE FROM goals WHERE goal_id = goalFound");
+export const deleteTask = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let taskId = req.params.id;
+    let taskFound = yield Task.findByPk(taskId);
+    if (taskFound) {
+        yield Task.destroy({
+            where: { id: taskId }
+        });
         res.status(200).json();
     }
     else {

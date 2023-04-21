@@ -1,19 +1,8 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { User } from "./user";
-
-export class Goal extends Model<InferAttributes<Goal>, InferCreationAttributes<Goal>>{
-    declare goalId: number;
-    declare username: string;
-    declare title: string;
-    declare plan: string;
-    declare completed: boolean;
-    declare timeframe: Date;
-    declare createdAt?: Date;
-    declare updatedAt?: Date;
+export class Goal extends Model {
 }
-
-
-export function GoalFactory(sequelize: Sequelize) {
+export function GoalFactory(sequelize) {
     Goal.init({
         goalId: {
             type: DataTypes.INTEGER,
@@ -58,7 +47,6 @@ export function GoalFactory(sequelize: Sequelize) {
         sequelize
     });
 }
-
 export function AssociateUserGoal() {
     User.hasMany(Goal, { foreignKey: 'username' });
     Goal.belongsTo(User, { foreignKey: 'username' });
