@@ -20,7 +20,7 @@ export function GoalFactory(sequelize: Sequelize) {
             autoIncrement: true,
             primaryKey: true,
             allowNull: false
-        },?
+        },
         username: {
             type: DataTypes.STRING,
             allowNull: false,
