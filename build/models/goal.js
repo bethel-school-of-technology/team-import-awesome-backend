@@ -1,45 +1,48 @@
-import { DataTypes, Model } from "sequelize";
-import { User } from "./user";
-export class Goal extends Model {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AssociateUserGoal = exports.GoalFactory = exports.Goal = void 0;
+const sequelize_1 = require("sequelize");
+const user_1 = require("./user");
+class Goal extends sequelize_1.Model {
 }
-export function GoalFactory(sequelize) {
+exports.Goal = Goal;
+function GoalFactory(sequelize) {
     Goal.init({
         goalId: {
-            type: DataTypes.INTEGER,
+            type: sequelize_1.DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
         username: {
-            type: DataTypes.STRING,
+            type: sequelize_1.DataTypes.STRING,
             allowNull: false,
-            unique: true
         },
         title: {
-            type: DataTypes.STRING,
+            type: sequelize_1.DataTypes.STRING,
             allowNull: false,
         },
         plan: {
-            type: DataTypes.STRING,
+            type: sequelize_1.DataTypes.STRING,
             allowNull: false,
         },
         completed: {
-            type: DataTypes.BOOLEAN,
+            type: sequelize_1.DataTypes.BOOLEAN,
             allowNull: false,
         },
         timeframe: {
-            type: DataTypes.DATE,
+            type: sequelize_1.DataTypes.DATE,
             allowNull: true,
         },
         createdAt: {
-            type: DataTypes.DATE,
+            type: sequelize_1.DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.NOW,
+            defaultValue: sequelize_1.DataTypes.NOW,
         },
         updatedAt: {
-            type: DataTypes.DATE,
+            type: sequelize_1.DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.NOW,
+            defaultValue: sequelize_1.DataTypes.NOW,
         },
     }, {
         freezeTableName: true,
@@ -47,7 +50,9 @@ export function GoalFactory(sequelize) {
         sequelize
     });
 }
-export function AssociateUserGoal() {
-    User.hasMany(Goal, { foreignKey: 'username' });
-    Goal.belongsTo(User, { foreignKey: 'username' });
+exports.GoalFactory = GoalFactory;
+function AssociateUserGoal() {
+    user_1.User.hasMany(Goal, { foreignKey: 'username' });
+    Goal.belongsTo(user_1.User, { foreignKey: 'username' });
 }
+exports.AssociateUserGoal = AssociateUserGoal;
