@@ -26,10 +26,9 @@ export const deleteGoal = (req, res, next) => __awaiter(void 0, void 0, void 0, 
     let goalFound = yield conn.execute("SELECT goal_id FROM goals");
     if (goalFound) {
         yield conn.execute("DELETE FROM goals WHERE goal_id = goalFound");
+        res.status(200).json();
     }
-    ;
-    res.status(200).json();
+    else {
+        res.status(404).json();
+    }
 });
-{
-    res.status(404).json();
-}

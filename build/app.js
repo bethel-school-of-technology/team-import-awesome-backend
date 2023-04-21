@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import express from 'express';
 import morgan from 'morgan';
 import { conn } from './db.js';
-import cors from "cors"
+import cors from "cors";
 import goalRoutes from './routes/goalRoutes';
 import userRoutes from './routes/userRoutes';
 const app = express();

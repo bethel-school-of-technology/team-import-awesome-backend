@@ -26,9 +26,9 @@ export const deleteGoal: RequestHandler = async (req, res, next) => {
         
         if (goalFound) {
             await conn.execute("DELETE FROM goals WHERE goal_id = goalFound")
-            };
+            
             res.status(200).json();
-        }
-        else {
+        } else {
             res.status(404).json();
         }
+    }
