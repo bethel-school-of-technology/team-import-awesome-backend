@@ -1,54 +1,58 @@
-import { Model, DataTypes } from "sequelize";
-export class User extends Model {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserFactory = exports.User = void 0;
+const sequelize_1 = require("sequelize");
+class User extends sequelize_1.Model {
 }
-export function UserFactory(sequelize) {
+exports.User = User;
+function UserFactory(sequelize) {
     User.init({
         userId: {
-            type: DataTypes.INTEGER,
+            type: sequelize_1.DataTypes.INTEGER,
             autoIncrement: true,
             allowNull: false,
             unique: true
         },
         username: {
-            type: DataTypes.STRING,
+            type: sequelize_1.DataTypes.STRING,
             primaryKey: true,
             allowNull: false,
             unique: true
         },
         password: {
-            type: DataTypes.STRING,
+            type: sequelize_1.DataTypes.STRING,
             allowNull: false
         },
         firstName: {
-            type: DataTypes.STRING,
+            type: sequelize_1.DataTypes.STRING,
             allowNull: false
         },
         lastName: {
-            type: DataTypes.STRING,
+            type: sequelize_1.DataTypes.STRING,
             allowNull: true
         },
         age: {
-            type: DataTypes.INTEGER,
+            type: sequelize_1.DataTypes.INTEGER,
             allowNull: true
         },
         email: {
-            type: DataTypes.STRING,
+            type: sequelize_1.DataTypes.STRING,
             allowNull: false,
             unique: true
         },
         bio: {
-            type: DataTypes.STRING,
+            type: sequelize_1.DataTypes.STRING,
             allowNull: true
         },
         createdAt: {
-            type: DataTypes.DATE,
+            type: sequelize_1.DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.NOW,
+            defaultValue: sequelize_1.DataTypes.NOW,
         },
         updatedAt: {
-            type: DataTypes.DATE,
+            type: sequelize_1.DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.NOW,
+            defaultValue: sequelize_1.DataTypes.NOW,
         },
     }, {
         tableName: 'users',
@@ -56,3 +60,4 @@ export function UserFactory(sequelize) {
         sequelize
     });
 }
+exports.UserFactory = UserFactory;

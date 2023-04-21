@@ -1,9 +1,9 @@
 import { Sequelize } from "sequelize";
 import { UserFactory } from "./user";
 import { AssociateUserGoal, GoalFactory } from "./goal";
-import { CommentFactory, AssociateGoalComment, AssociateUserComment } from "./comment";
+import { AssociateGoalComment, AssociateUserComment, CommentFactory } from "./comment";
 
-const dbName = 'goalGetter_db';
+const dbName = 'goalgetter_db';
 const username = 'root';
 const password = 'password';
 
