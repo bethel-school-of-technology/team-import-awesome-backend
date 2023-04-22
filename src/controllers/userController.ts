@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import { User } from "../models/user";
 import { comparePasswords, hashPassword, signUserToken, verifyUser } from "../services/auth";
 
-export const getAllUser: RequestHandler = async (req, res, next) => {
+export const getAllUsers: RequestHandler = async (req, res, next) => {
     let users = await User.findAll();
     res.status(200).json(users);
 }

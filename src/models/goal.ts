@@ -35,7 +35,7 @@ export function GoalFactory(sequelize: Sequelize) {
         },
         completed: {
             type: DataTypes.BOOLEAN,
-            allowNull: false,
+            defaultValue: false,
         },
         timeframe: {
             type: DataTypes.DATE,
