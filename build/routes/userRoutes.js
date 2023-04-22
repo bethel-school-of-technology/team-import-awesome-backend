@@ -1,10 +1,12 @@
 "use strict";
-// import { Router } from 'express';
-// import { createUser, getUser, loginUser, updateUser } from '../controllers/userController';
-// const router = Router();
-// router.post('/', createUser);
-// router.post('/login', loginUser);
-// //we might have to change username to userId depeding on database schema
-// router.get('/:username', getUser);
-// router.put('/edit/:username', updateUser);
-// export default router;
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const userController_1 = require("../controllers/userController");
+const router = (0, express_1.Router)();
+router.get('/', userController_1.getAllUser);
+router.post('/', userController_1.createUser);
+router.get('/:username', userController_1.getUser);
+router.put('/edit/:username', userController_1.updateUser);
+router.delete('/:username', userController_1.deleteUser);
+router.post('/login', userController_1.loginUser);
+exports.default = router;
