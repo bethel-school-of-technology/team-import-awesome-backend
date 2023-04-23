@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import { db } from './models'
 import goalRoutes from './routes/goalRoutes'
 import userRoutes from './routes/userRoutes'
+import commentRoutes from './routes/commentRoutes'
 
 const app = express();
 
