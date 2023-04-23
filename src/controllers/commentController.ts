@@ -1,18 +1,19 @@
 import {RequestHandler} from "express";
-import {verifyUser} from "../services/auth.js";
-import { Comment } from "../models/comment.js";
-
-// export const getAllComments: RequestHandler = async (req, res, next) => {
-//     let comments = await Comment.findAll();
-//     res.status(200).json(comments);
-// }
+import {verifyUser} from "../services/auth";
+import { Comment } from "../models/comment";
+import { User } from '../models/user';
 
 
+
+export const getAllComments: RequestHandler = async (req, res, next) => {
+    let comments = await Comment.findAll();
+    res.status(200).json(comments);
+}
 
 export const createComment: RequestHandler = async (req, res, next) => {
     let newComment: Comment = req.body;
-    let user = await verifyUser(req)
-    console.log(user)
+    let user = await verifyUser(req);
+    console.log(user);
     if (newComment.comment && user && newComment.goalId)  {
         let created = await Comment.create({...newComment, username: user.username, goalId: newComment.goalId});
         await created.save()
@@ -21,7 +22,6 @@ export const createComment: RequestHandler = async (req, res, next) => {
     else {
         res.status(400).send();
     }
-}
 
 
 export const getComment: RequestHandler = async (req, res, next) => {
