@@ -19,6 +19,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // routes
+app.use('/comments', commentRoutes)
 app.use('/goals', goalRoutes);
 app.use('/users', userRoutes);
 

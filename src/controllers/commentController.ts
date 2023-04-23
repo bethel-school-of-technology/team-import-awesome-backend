@@ -18,8 +18,9 @@ export const createComment: RequestHandler = async (req, res, next) => {
     }
 
     let newComment: Comment = req.body;
+    newComment.username = user.username;
 
-    if (newComment.comment && user && newComment.goalId) {
+    if (newComment.comment && newComment.goalId) {
         let created = await Comment.create({ ...newComment, username: user.username, goalId: newComment.goalId });
         await created.save()
         res.status(201).json(created);
@@ -27,7 +28,7 @@ export const createComment: RequestHandler = async (req, res, next) => {
     else {
         res.status(400).send();
     }
-};
+}
 
 
 export const getComment: RequestHandler = async (req, res, next) => {
@@ -50,6 +51,12 @@ export const updateComment: RequestHandler = async (req, res, next) => {
 
     let commentId = req.params.id;
     let newComment: Comment = req.body;
+
+    newComment.username = user.username
+    newComment.goalId = req.body.goalId;
+
+    console.log("req.params.id", req.params.id);
+    console.log("req.body", req.body);
 
     let commentFound = await Comment.findByPk(commentId);
 
