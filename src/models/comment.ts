@@ -5,7 +5,7 @@ import { Goal } from "./goal";
 export class Comment extends Model<InferAttributes<Comment>, InferCreationAttributes<Comment>>{
     declare commentId: number;
     declare username: string;
-    declare goalId: string;
+    declare goalId: number;
     declare comment: string;
     declare createdAt?: Date;
 }
