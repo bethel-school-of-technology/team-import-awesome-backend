@@ -1,5 +1,5 @@
 import {RequestHandler} from "express";
-import {verifyUser} from "../services/auth";
+import {verifyUser} from "../services/auth.js";
 import { Comment } from "../models/comment";
 import { User } from '../models/user';
 
