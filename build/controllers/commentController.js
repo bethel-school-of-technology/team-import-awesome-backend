@@ -14,7 +14,8 @@ const createComment = async (req, res, next) => {
         return res.status(403).send();
     }
     let newComment = req.body;
-    if (newComment.comment && user && newComment.goalId) {
+    newComment.username = user.username;
+    if (newComment.comment && newComment.goalId) {
         let created = await comment_1.Comment.create({ ...newComment, username: user.username, goalId: newComment.goalId });
         await created.save();
         res.status(201).json(created);
@@ -42,6 +43,10 @@ const updateComment = async (req, res, next) => {
     }
     let commentId = req.params.id;
     let newComment = req.body;
+    newComment.username = user.username;
+    newComment.goalId = req.body.goalId;
+    console.log("req.params.id", req.params.id);
+    console.log("req.body", req.body);
     let commentFound = await comment_1.Comment.findByPk(commentId);
     if (commentFound && commentFound.commentId == newComment.commentId
         && commentFound.goalId == newComment.goalId

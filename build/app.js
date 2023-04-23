@@ -8,6 +8,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const models_1 = require("./models");
 const goalRoutes_1 = __importDefault(require("./routes/goalRoutes"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
+const commentRoutes_1 = __importDefault(require("./routes/commentRoutes"));
 const app = (0, express_1.default)();
 app.use((0, morgan_1.default)('dev'));
 app.use(express_1.default.json());
@@ -18,6 +19,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 // routes
+app.use('/comments', commentRoutes_1.default);
 app.use('/goals', goalRoutes_1.default);
 app.use('/users', userRoutes_1.default);
 app.use((req, res, next) => {
