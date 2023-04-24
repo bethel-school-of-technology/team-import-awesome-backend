@@ -3,19 +3,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteGoal = exports.updateGoal = exports.getGoal = exports.createGoal = exports.getAllGoals = void 0;
 const goal_1 = require("../models/goal");
 const auth_1 = require("../services/auth");
-const getAllGoals = async (req, res) => {
+const getAllGoals = async (req, res, next) => {
     let tasks = await goal_1.Goal.findAll();
     res.status(200).json(tasks);
 };
 exports.getAllGoals = getAllGoals;
-const createGoal = async (req, res) => {
+const createGoal = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req); // user authentication
     if (!user) {
         return res.status(403).send();
     }
     let newGoal = req.body;
     newGoal.username = user.username;
-    if (newGoal.title && newGoal.plan) { // goal is created if it has a title and plan
+    // checking if goal has a title and plan
+    if (newGoal.title && newGoal.plan) {
         let created = await goal_1.Goal.create(newGoal);
         res.status(201).json(created);
     }
@@ -24,9 +25,10 @@ const createGoal = async (req, res) => {
     }
 };
 exports.createGoal = createGoal;
-const getGoal = async (req, res) => {
+const getGoal = async (req, res, next) => {
     let goalId = req.params.id;
     let goal = await goal_1.Goal.findByPk(goalId);
+    // checking for a goal
     if (goal) {
         res.status(200).json(goal);
     }
@@ -35,19 +37,21 @@ const getGoal = async (req, res) => {
     }
 };
 exports.getGoal = getGoal;
-const updateGoal = async (req, res) => {
+const updateGoal = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req); // user authentication
     if (!user) {
         return res.status(403).send();
     }
-    let goalId = req.params.id; // extract the goal ID from the request parameters
-    let newGoal = req.body; //updated goal object
-    newGoal.username = user.username; // Tthe username param of the newGoal object is set to the username of the authenticated user.
-    let goalFound = await goal_1.Goal.findByPk(goalId); // finding goal that is to be edited by its id
-    if (goalFound && // if a goal was found
-        goalFound.username == newGoal.username && // if the user for the goal found matches up with the user for the goal being edited
-        user.username == goalFound.username // if the user logged in matches the goal that was found
-        && newGoal.title && newGoal.plan) { //if the updated goal has the title & plan fields filled in
+    // extract the goal ID from the request parameters
+    let goalId = req.params.id;
+    //updated goal object
+    let newGoal = req.body;
+    // New goal username set to current user
+    newGoal.username = user.username;
+    // finding goal that is to be edited by its id
+    let goalFound = await goal_1.Goal.findByPk(goalId);
+    // checking for a goal, goalFound username matches username of updated goal, current user matches username of goalFound, new goal has a title and a plan.
+    if (goalFound && goalFound.username == newGoal.username && user.username == goalFound.username && newGoal.title && newGoal.plan) {
         await goal_1.Goal.update(newGoal, {
             where: { goalId: goalId }
         });
@@ -58,14 +62,15 @@ const updateGoal = async (req, res) => {
     }
 };
 exports.updateGoal = updateGoal;
-const deleteGoal = async (req, res) => {
+const deleteGoal = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req); // user authentication
     if (!user) {
         return res.status(403).send();
     }
     let goalId = req.params.id;
     let goalFound = await goal_1.Goal.findByPk(goalId);
-    if (goalFound && goalFound.username == user.username) { // check if the user logged in matches the username for goal
+    // checking if current user matches the username of goal
+    if (goalFound && goalFound.username == user.username) {
         await goal_1.Goal.destroy({
             where: { goalId: goalId }
         });

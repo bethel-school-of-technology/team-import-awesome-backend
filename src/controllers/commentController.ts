@@ -10,6 +10,9 @@ export const getAllComments: RequestHandler = async (req, res, next) => {
     res.status(200).json(comments);
 }
 
+
+// Aaron: we might need to somehow bring in the goalId without making the user enter it.
+
 export const createComment: RequestHandler = async (req, res, next) => {
     let user: User | null = await verifyUser(req); // user authentication
 
@@ -20,8 +23,11 @@ export const createComment: RequestHandler = async (req, res, next) => {
     let newComment: Comment = req.body;
     newComment.username = user.username;
 
+    // checking for a comment and a goal 
     if (newComment.comment && newComment.goalId) {
-        let created = await Comment.create({ ...newComment, username: user.username, goalId: newComment.goalId });
+
+        // creating newComment and setting goalId to newComment.goalId
+        let created = await Comment.create({ ...newComment, goalId: newComment.goalId });
         await created.save()
         res.status(201).json(created);
     }
@@ -33,7 +39,10 @@ export const createComment: RequestHandler = async (req, res, next) => {
 
 export const getComment: RequestHandler = async (req, res, next) => {
     let commentId = req.params.id;
+
     let commentFound = await Comment.findByPk(commentId);
+
+    //checking for comment
     if (commentFound) {
         res.status(200).json(commentFound);
     } else {
@@ -52,14 +61,13 @@ export const updateComment: RequestHandler = async (req, res, next) => {
     let commentId = req.params.id;
     let newComment: Comment = req.body;
 
+    // setting comment username to current user
     newComment.username = user.username
     newComment.goalId = req.body.goalId;
 
-    console.log("req.params.id", req.params.id);
-    console.log("req.body", req.body);
-
     let commentFound = await Comment.findByPk(commentId);
 
+    // checking for a comment, the comment found matches comment being updated, goal id of comment matches new comment goal id, and username from old comment matches username of current user.
     if (commentFound && commentFound.commentId == newComment.commentId
         && commentFound.goalId == newComment.goalId
         && commentFound.username == user.username) {
@@ -83,8 +91,8 @@ export const deleteComment: RequestHandler = async (req, res, next) => {
     const commentId = req.params.id;
     const commentFound = await Comment.findByPk(commentId);
 
-
-    if (commentFound) {
+    // checking for comment and if comment's username matches current user.
+    if (commentFound && commentFound.username == user.username) {
         await Comment.destroy({
             where: { commentId: commentId }
         });

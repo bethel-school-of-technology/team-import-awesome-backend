@@ -10,6 +10,7 @@ const getAllUsers = async (req, res, next) => {
 exports.getAllUsers = getAllUsers;
 const createUser = async (req, res, next) => {
     let newUser = req.body;
+    // checking for all required fields filled out
     if (newUser.username && newUser.password && newUser.firstName && newUser.email) {
         let hashedPassword = await (0, auth_1.hashPassword)(newUser.password);
         newUser.password = hashedPassword;
@@ -27,6 +28,7 @@ exports.createUser = createUser;
 const getUser = async (req, res, next) => {
     let username = req.params.username;
     let user = await user_1.User.findByPk(username);
+    // checking for a user
     if (user) {
         res.status(200).json(user);
     }
@@ -36,7 +38,7 @@ const getUser = async (req, res, next) => {
 };
 exports.getUser = getUser;
 const updateUser = async (req, res, next) => {
-    let user = await (0, auth_1.verifyUser)(req);
+    let user = await (0, auth_1.verifyUser)(req); // user authentication
     if (!user) {
         return res.status(403).send();
     }
@@ -44,6 +46,7 @@ const updateUser = async (req, res, next) => {
     let newUser = req.body;
     newUser.username = user.username;
     let userFound = await user_1.User.findByPk(username);
+    // checking for found user and username found matches current user
     if (userFound && userFound.username == newUser.username) {
         await user_1.User.update(newUser, {
             where: { username: username }
@@ -56,13 +59,14 @@ const updateUser = async (req, res, next) => {
 };
 exports.updateUser = updateUser;
 const deleteUser = async (req, res, next) => {
-    let user = await (0, auth_1.verifyUser)(req);
+    let user = await (0, auth_1.verifyUser)(req); // user authentication
     if (!user) {
         return res.status(403).send();
     }
     let username = req.params.username;
     let userFound = await user_1.User.findByPk(username);
-    if (userFound) {
+    // checking if user was found and matches current user
+    if (userFound && userFound.username == user.username) {
         await user_1.User.destroy({
             where: { username: username }
         });
