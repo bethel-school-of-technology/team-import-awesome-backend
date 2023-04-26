@@ -40,6 +40,10 @@ function UserFactory(sequelize) {
             allowNull: false,
             unique: true
         },
+        avatar: {
+            type: sequelize_1.DataTypes.STRING,
+            allowNull: true
+        },
         bio: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: true
