@@ -1,4 +1,5 @@
 import { RequestHandler } from "express";
+import { Comment } from "../models/comment";
 import { Goal } from "../models/goal";
 import { User } from "../models/user";
 import { verifyUser } from "../services/auth";
@@ -31,7 +32,7 @@ export const createGoal: RequestHandler = async (req, res, next) => {
 export const getGoal: RequestHandler = async (req, res, next) => {
     let goalId = req.params.id;
 
-    let goal = await Goal.findByPk(goalId);
+    let goal = await Goal.findByPk(goalId, { include: [Comment] });
 
     // checking for a goal
     if (goal) {
