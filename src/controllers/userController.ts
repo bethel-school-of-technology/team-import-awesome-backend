@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
 import { User } from "../models/user";
+import { Goal } from "../models/goal";
 import { comparePasswords, hashPassword, signUserToken, verifyUser } from "../services/auth";
 
 export const getAllUsers: RequestHandler = async (req, res, next) => {
@@ -31,7 +32,7 @@ export const createUser: RequestHandler = async (req, res, next) => {
 export const getUser: RequestHandler = async (req, res, next) => {
     let username = req.params.username;
 
-    let user = await User.findByPk(username);
+    let user = await User.findByPk(username, { include: Goal });
 
     // checking for a user
     if (user) {

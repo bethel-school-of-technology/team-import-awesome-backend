@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginUser = exports.deleteUser = exports.updateUser = exports.getUser = exports.createUser = exports.getAllUsers = void 0;
 const user_1 = require("../models/user");
+const goal_1 = require("../models/goal");
 const auth_1 = require("../services/auth");
 const getAllUsers = async (req, res, next) => {
     let users = await user_1.User.findAll();
@@ -27,7 +28,7 @@ const createUser = async (req, res, next) => {
 exports.createUser = createUser;
 const getUser = async (req, res, next) => {
     let username = req.params.username;
-    let user = await user_1.User.findByPk(username);
+    let user = await user_1.User.findByPk(username, { include: goal_1.Goal });
     // checking for a user
     if (user) {
         res.status(200).json(user);
