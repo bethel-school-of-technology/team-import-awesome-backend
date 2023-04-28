@@ -8,6 +8,7 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
     declare lastName: string;
     declare age: number;
     declare email: string;
+    declare avatar: string;
     declare bio: string;
     declare createdAt?: Date;
     declare updatedAt?: Date;
@@ -47,6 +48,10 @@ export function UserFactory(sequelize: Sequelize) {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true
+        },
+        avatar: {
+            type: DataTypes.STRING,
+            allowNull: true
         },
         bio: {
             type: DataTypes.STRING,
