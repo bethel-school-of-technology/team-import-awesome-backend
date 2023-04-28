@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteGoal = exports.updateGoal = exports.getGoal = exports.createGoal = exports.getAllGoals = void 0;
+const comment_1 = require("../models/comment");
 const goal_1 = require("../models/goal");
 const auth_1 = require("../services/auth");
 const getAllGoals = async (req, res, next) => {
@@ -27,7 +28,7 @@ const createGoal = async (req, res, next) => {
 exports.createGoal = createGoal;
 const getGoal = async (req, res, next) => {
     let goalId = req.params.id;
-    let goal = await goal_1.Goal.findByPk(goalId);
+    let goal = await goal_1.Goal.findByPk(goalId, { include: [comment_1.Comment] });
     // checking for a goal
     if (goal) {
         res.status(200).json(goal);
