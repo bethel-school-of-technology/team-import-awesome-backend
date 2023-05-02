@@ -1,14 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteGoal = exports.updateGoal = exports.getGoal = exports.createGoal = exports.getAllGoals = void 0;
+exports.deleteGoal = exports.updateGoal = exports.getGoal = exports.createGoal = exports.getUserGoals = exports.getAllGoals = void 0;
 const comment_1 = require("../models/comment");
 const goal_1 = require("../models/goal");
 const auth_1 = require("../services/auth");
 const getAllGoals = async (req, res, next) => {
-    let tasks = await goal_1.Goal.findAll();
-    res.status(200).json(tasks);
+    let goals = await goal_1.Goal.findAll();
+    res.status(200).json(goals);
 };
 exports.getAllGoals = getAllGoals;
+const getUserGoals = async (req, res, next) => {
+    let username = req.params.username;
+    let goals = await goal_1.Goal.findAll({
+        where: {
+            username: username
+        }
+    });
+    if (goals) {
+        res.status(200).json(goals);
+    }
+    else {
+        res.status(404).json({});
+    }
+};
+exports.getUserGoals = getUserGoals;
 const createGoal = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req); // user authentication
     if (!user) {
