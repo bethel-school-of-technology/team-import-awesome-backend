@@ -5,8 +5,23 @@ import { User } from "../models/user";
 import { verifyUser } from "../services/auth";
 
 export const getAllGoals: RequestHandler = async (req, res, next) => {
-    let tasks = await Goal.findAll();
-    res.status(200).json(tasks);
+    let goals = await Goal.findAll();
+    res.status(200).json(goals);
+}
+
+export const getUserGoals: RequestHandler = async (req, res, next) => {
+    let username = req.params.username;
+
+    let goals = await Goal.findAll({
+        where: {
+            username: username
+        }
+    })
+    if(goals){
+        res.status(200).json(goals);
+    } else {
+        res.status(404).json({});
+    }
 }
 
 export const createGoal: RequestHandler = async (req, res, next) => {
