@@ -4,7 +4,7 @@ import { createGoal, deleteGoal, getGoal, getUserGoals, updateGoal } from '../co
 
 const router = Router();
 
-router.get('/', getUserGoals);
+router.get('/:username', getUserGoals);
 
 router.post('/', createGoal);
 
