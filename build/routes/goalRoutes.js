@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const goalController_1 = require("../controllers/goalController");
 const router = (0, express_1.Router)();
-router.get('/', goalController_1.getUserGoals);
+router.get('/:username', goalController_1.getUserGoals);
 router.post('/', goalController_1.createGoal);
 router.get('/:id', goalController_1.getGoal);
 router.put('/:id', goalController_1.updateGoal);
