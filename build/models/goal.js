@@ -30,7 +30,11 @@ function GoalFactory(sequelize) {
             type: sequelize_1.DataTypes.BOOLEAN,
             defaultValue: false,
         },
-        timeframe: {
+        startDate: {
+            type: sequelize_1.DataTypes.DATE,
+            allowNull: true,
+        },
+        endDate: {
             type: sequelize_1.DataTypes.DATE,
             allowNull: true,
         },

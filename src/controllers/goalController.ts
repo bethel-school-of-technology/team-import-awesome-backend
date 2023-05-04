@@ -17,7 +17,7 @@ export const getUserGoals: RequestHandler = async (req, res, next) => {
             username: username
         }
     })
-    if(goals){
+    if (goals) {
         res.status(200).json(goals);
     } else {
         res.status(404).json({});
@@ -35,7 +35,7 @@ export const createGoal: RequestHandler = async (req, res, next) => {
     newGoal.username = user.username;
 
     // checking if goal has a title and plan
-    if (newGoal.title && newGoal.plan) {
+    if (newGoal.title && newGoal.plan && newGoal.startDate && newGoal.endDate) {
         let created = await Goal.create(newGoal);
         res.status(201).json(created);
     }

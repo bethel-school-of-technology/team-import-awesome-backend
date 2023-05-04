@@ -32,7 +32,7 @@ const createGoal = async (req, res, next) => {
     let newGoal = req.body;
     newGoal.username = user.username;
     // checking if goal has a title and plan
-    if (newGoal.title && newGoal.plan) {
+    if (newGoal.title && newGoal.plan && newGoal.startDate && newGoal.endDate) {
         let created = await goal_1.Goal.create(newGoal);
         res.status(201).json(created);
     }

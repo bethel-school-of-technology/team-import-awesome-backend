@@ -4,14 +4,14 @@ import { createGoal, deleteGoal, getGoal, getUserGoals, updateGoal } from '../co
 
 const router = Router();
 
-router.get('/:username', getUserGoals);
-
 router.post('/', createGoal);
 
-router.get('/:id', getGoal);
+router.get('/detail/:id', getGoal);
 
-router.put('/:id', updateGoal);
+router.put('/detail/:id', updateGoal);
 
-router.delete('/:id', deleteGoal);
+router.delete('/detail/:id', deleteGoal);
+
+router.get('/:username', getUserGoals);
 
 export default router;
