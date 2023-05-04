@@ -7,15 +7,15 @@ class User extends sequelize_1.Model {
 exports.User = User;
 function UserFactory(sequelize) {
     User.init({
-        userId: {
-            type: sequelize_1.DataTypes.INTEGER,
-            autoIncrement: true,
-            allowNull: false,
-            unique: true
-        },
         username: {
             type: sequelize_1.DataTypes.STRING,
             primaryKey: true,
+            allowNull: false,
+            unique: true
+        },
+        userId: {
+            type: sequelize_1.DataTypes.INTEGER,
+            autoIncrement: true,
             allowNull: false,
             unique: true
         },
@@ -42,7 +42,7 @@ function UserFactory(sequelize) {
         },
         avatar: {
             type: sequelize_1.DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
         },
         bio: {
             type: sequelize_1.DataTypes.STRING,

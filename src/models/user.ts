@@ -1,8 +1,8 @@
 import { InferAttributes, InferCreationAttributes, Model, DataTypes, Sequelize } from "sequelize";
 
 export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>>{
-    declare userId: number;
     declare username: string;
+    declare userId: number;
     declare password: string;
     declare firstName: string;
     declare lastName: string;
@@ -16,15 +16,15 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
 
 export function UserFactory(sequelize: Sequelize) {
     User.init({
-        userId: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            allowNull: false,
-            unique: true
-        },
         username: {
             type: DataTypes.STRING,
             primaryKey: true,
+            allowNull: false,
+            unique: true
+        },
+        userId: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
             allowNull: false,
             unique: true
         },
@@ -51,7 +51,8 @@ export function UserFactory(sequelize: Sequelize) {
         },
         avatar: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
+
         },
         bio: {
             type: DataTypes.STRING,

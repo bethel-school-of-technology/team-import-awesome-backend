@@ -7,7 +7,8 @@ export class Goal extends Model<InferAttributes<Goal>, InferCreationAttributes<G
     declare title: string;
     declare plan: string;
     declare completed: boolean;
-    declare timeframe: Date;
+    declare startDate: Date;
+    declare endDate: Date;
     declare createdAt?: Date;
     declare updatedAt?: Date;
 }
@@ -37,7 +38,11 @@ export function GoalFactory(sequelize: Sequelize) {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
         },
-        timeframe: {
+        startDate: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
+        endDate: {
             type: DataTypes.DATE,
             allowNull: true,
         },
