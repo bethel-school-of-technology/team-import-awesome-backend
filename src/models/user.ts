@@ -52,6 +52,7 @@ export function UserFactory(sequelize: Sequelize) {
         avatar: {
             type: DataTypes.STRING,
             allowNull: true,
+            defaultValue: 'https://akns-images.eonline.com/eol_images/Entire_Site/2018024/rs_600x600-180124163953-600-tom-myspace.jpg?fit=around%7C1200:1200&output-quality=90&crop=1200:1200;center,top'
 
         },
         bio: {
