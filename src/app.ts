@@ -28,7 +28,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // Syncing our database
-db.sync().then(() => {
+db.sync({alter:true}).then(() => {
     console.info("----- DATABASE CONNECTION: SUCCESSFUL -----")
 });
 
