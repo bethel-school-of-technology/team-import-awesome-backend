@@ -15,6 +15,9 @@ const createUser = async (req, res, next) => {
     if (newUser.username && newUser.password && newUser.firstName && newUser.email) {
         let hashedPassword = await (0, auth_1.hashPassword)(newUser.password);
         newUser.password = hashedPassword;
+        if (newUser.avatar?.length < 1) {
+            newUser.avatar = 'https://akns-images.eonline.com/eol_images/Entire_Site/2018024/rs_600x600-180124163953-600-tom-myspace.jpg?fit=around%7C1200:1200&output-quality=90&crop=1200:1200;center,top';
+        }
         let created = await user_1.User.create(newUser);
         res.status(200).json({
             username: created.username,
