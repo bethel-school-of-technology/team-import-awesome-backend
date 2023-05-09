@@ -26,7 +26,7 @@ app.use((req, res, next) => {
     res.status(404).end();
 });
 // Syncing our database
-models_1.db.sync({ alter: true }).then(() => {
+models_1.db.sync().then(() => {
     console.info("----- DATABASE CONNECTION: SUCCESSFUL -----");
 });
 app.listen(3000);
