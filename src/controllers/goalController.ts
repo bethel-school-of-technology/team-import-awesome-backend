@@ -25,7 +25,8 @@ export const getUserGoals: RequestHandler = async (req, res, next) => {
 }
 
 export const createGoal: RequestHandler = async (req, res, next) => {
-    let user: User | null = await verifyUser(req); // user authentication
+    // user authentication
+    let user: User | null = await verifyUser(req);
 
     if (!user) {
         return res.status(403).send();
@@ -59,7 +60,8 @@ export const getGoal: RequestHandler = async (req, res, next) => {
 }
 
 export const updateGoal: RequestHandler = async (req, res, next) => {
-    let user: User | null = await verifyUser(req); // user authentication
+    // user authentication
+    let user: User | null = await verifyUser(req);
 
     if (!user) {
         return res.status(403).send();
@@ -91,7 +93,8 @@ export const updateGoal: RequestHandler = async (req, res, next) => {
 }
 
 export const deleteGoal: RequestHandler = async (req, res, next) => {
-    let user: User | null = await verifyUser(req); // user authentication
+    // user authentication
+    let user: User | null = await verifyUser(req);
 
     if (!user) {
         return res.status(403).send();

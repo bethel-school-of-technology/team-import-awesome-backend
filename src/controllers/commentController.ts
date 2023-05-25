@@ -11,10 +11,9 @@ export const getAllComments: RequestHandler = async (req, res, next) => {
 }
 
 
-// Aaron: we might need to somehow bring in the goalId without making the user enter it.
-
 export const createComment: RequestHandler = async (req, res, next) => {
-    let user: User | null = await verifyUser(req); // user authentication
+    // user authentication
+    let user: User | null = await verifyUser(req);
 
     if (!user) {
         return res.status(403).send();
@@ -82,7 +81,8 @@ export const updateComment: RequestHandler = async (req, res, next) => {
 
 
 export const deleteComment: RequestHandler = async (req, res, next) => {
-    let user: User | null = await verifyUser(req); // user authentication
+    // user authentication
+    let user: User | null = await verifyUser(req);
 
     if (!user) {
         return res.status(403).send();

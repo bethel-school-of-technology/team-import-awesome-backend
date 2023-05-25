@@ -43,7 +43,8 @@ const getUser = async (req, res, next) => {
 };
 exports.getUser = getUser;
 const updateUser = async (req, res, next) => {
-    let user = await (0, auth_1.verifyUser)(req); // user authentication
+    // user authentication
+    let user = await (0, auth_1.verifyUser)(req);
     if (!user) {
         return res.status(403).send();
     }
@@ -64,7 +65,8 @@ const updateUser = async (req, res, next) => {
 };
 exports.updateUser = updateUser;
 const deleteUser = async (req, res, next) => {
-    let user = await (0, auth_1.verifyUser)(req); // user authentication
+    // user authentication
+    let user = await (0, auth_1.verifyUser)(req);
     if (!user) {
         return res.status(403).send();
     }

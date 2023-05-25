@@ -8,9 +8,9 @@ const getAllComments = async (req, res, next) => {
     res.status(200).json(comments);
 };
 exports.getAllComments = getAllComments;
-// Aaron: we might need to somehow bring in the goalId without making the user enter it.
 const createComment = async (req, res, next) => {
-    let user = await (0, auth_1.verifyUser)(req); // user authentication
+    // user authentication
+    let user = await (0, auth_1.verifyUser)(req);
     if (!user) {
         return res.status(403).send();
     }
@@ -66,7 +66,8 @@ const updateComment = async (req, res, next) => {
 };
 exports.updateComment = updateComment;
 const deleteComment = async (req, res, next) => {
-    let user = await (0, auth_1.verifyUser)(req); // user authentication
+    // user authentication
+    let user = await (0, auth_1.verifyUser)(req);
     if (!user) {
         return res.status(403).send();
     }
