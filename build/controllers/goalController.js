@@ -25,7 +25,8 @@ const getUserGoals = async (req, res, next) => {
 };
 exports.getUserGoals = getUserGoals;
 const createGoal = async (req, res, next) => {
-    let user = await (0, auth_1.verifyUser)(req); // user authentication
+    // user authentication
+    let user = await (0, auth_1.verifyUser)(req);
     if (!user) {
         return res.status(403).send();
     }
@@ -54,7 +55,8 @@ const getGoal = async (req, res, next) => {
 };
 exports.getGoal = getGoal;
 const updateGoal = async (req, res, next) => {
-    let user = await (0, auth_1.verifyUser)(req); // user authentication
+    // user authentication
+    let user = await (0, auth_1.verifyUser)(req);
     if (!user) {
         return res.status(403).send();
     }
@@ -79,7 +81,8 @@ const updateGoal = async (req, res, next) => {
 };
 exports.updateGoal = updateGoal;
 const deleteGoal = async (req, res, next) => {
-    let user = await (0, auth_1.verifyUser)(req); // user authentication
+    // user authentication
+    let user = await (0, auth_1.verifyUser)(req);
     if (!user) {
         return res.status(403).send();
     }

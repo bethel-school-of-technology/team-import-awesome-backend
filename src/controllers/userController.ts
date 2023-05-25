@@ -14,7 +14,7 @@ export const createUser: RequestHandler = async (req, res, next) => {
     // checking for all required fields filled out
     if (newUser.username && newUser.password && newUser.firstName && newUser.email) {
         let hashedPassword = await hashPassword(newUser.password);
-   
+
         //sets default avatar if none is provided
         newUser.password = hashedPassword;
         if (newUser.avatar?.length < 1) {
@@ -48,7 +48,8 @@ export const getUser: RequestHandler = async (req, res, next) => {
 }
 
 export const updateUser: RequestHandler = async (req, res, next) => {
-    let user: User | null = await verifyUser(req); // user authentication
+    // user authentication
+    let user: User | null = await verifyUser(req);
 
     if (!user) {
         return res.status(403).send();
@@ -75,7 +76,8 @@ export const updateUser: RequestHandler = async (req, res, next) => {
 }
 
 export const deleteUser: RequestHandler = async (req, res, next) => {
-    let user: User | null = await verifyUser(req); // user authentication
+    // user authentication
+    let user: User | null = await verifyUser(req);
 
     if (!user) {
         return res.status(403).send();
