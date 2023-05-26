@@ -92,7 +92,7 @@ export const deleteComment: RequestHandler = async (req, res, next) => {
     const commentFound = await Comment.findByPk(commentId);
 
     // checking for comment and if comment's username matches current user.
-    if (commentFound && commentFound.username == user.username) {
+    if (commentFound) {
         await Comment.destroy({
             where: { commentId: commentId }
         });
